@@ -11,13 +11,19 @@ Operating Systems
 Files and folders
 -----------------
 
-.vimrc
+.mapconf
+    configures source/target locations
+
+bashrc  => ~/.bashrc
+    bash configuration
+
+vimrc   => ~/.vimrc
     vim configuration
 
-.vim
+vim     => ~/.vim
     plugins for vim
 
-.config/awesome/rc.lua
+config/awesome => ~/.config/awesome
     settings for awesome
 
 Usage
