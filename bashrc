@@ -8,7 +8,7 @@ fi
 # User specific aliases and functions
 export LD_LIBRARY_PATH=.
 
-HISTFILESIZE=100000
+export HISTFILESIZE=100000
 
 #  Customize BASH PS1 prompt to show current GIT repository and branch.
 #  by Mike Stewart - http://MediaDoneRight.com
