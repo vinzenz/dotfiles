@@ -1,3 +1,14 @@
+set nocompatible               " be iMproved
+filetype off                   " required!
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+Bundle 'gmarik/vundle'
+Bundle 'Valloric/YouCompleteMe'
+
+filetype plugin indent on
+set guioptions=aegi
+
 let g:syntastic_cpp_compiler_options = ' -std=c++0x'
 let g:syntastic_cpp_compiler = 'g++-4.7.1'
 set statusline+=%#warningmsg#
@@ -6,9 +17,11 @@ set statusline+=%*
 set et
 set ts=4
 set st=4
+set sw=4
 set noai
 set nocin
 set nosi
+set cinoptions=1s
 
 " Show line numbers and length
 set number " show linenumbers
@@ -22,8 +35,10 @@ highlight ColorColumn term=reverse ctermbg=203
 autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
 au InsertLeave * match ExtraWhitespace /\s\+$/
 
-set t_Co=256
-color wombat256mod
+if $TERM =~ "-256color"
+    set t_Co=256
+    color wombat256mod
+endif
 
 " Remap leader key
 let mapleader = ","
@@ -36,6 +51,9 @@ map <Leader>m <esc>:tabnext<CR>
 map <Leader>n <esc>:tabprevious<CR>
 " Tab Close
 map <Leader>c <esc>:tabclose<CR>
+
+map <Leader>p "*p
+map <Leader>P "+p
 
 " Improved code indention
 vnoremap < <gv

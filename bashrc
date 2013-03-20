@@ -4,6 +4,7 @@
 if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
 fi
+export EDITOR=vim
 
 # User specific aliases and functions
 export LD_LIBRARY_PATH=.
@@ -116,3 +117,5 @@ else \
     # @2 - Prompt when not in GIT repo
     echo " '$Yellow$PathShort$Color_Off'\$ "; \
 fi)'
+
+. ~/.local/lib/python2.7/site-packages/powerline/bindings/bash/powerline.sh
