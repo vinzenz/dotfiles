@@ -4,13 +4,32 @@ set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
 Bundle 'gmarik/vundle'
-Bundle 'Valloric/YouCompleteMe'
+Bundle 'kien/ctrlp.vim'
+Bundle 'Blackrush/vim-gocode'
+Bundle 'kchmck/vim-coffee-script'
+Bundle 'L9'
+Bundle 'tpope/vim-fugitive'
+Bundle 'majutsushi/tagbar'
+Bundle 'bling/vim-airline'
 
 filetype plugin indent on
 set guioptions=aegi
 
-let g:syntastic_cpp_compiler_options = ' -std=c++0x'
-let g:syntastic_cpp_compiler = 'g++-4.7.1'
+"GUI hacks
+if has("gui_running")
+"Paste from clipboard in normal mode
+   nmap <S-INS> "+gP
+"Paste from clipboard in insert mode
+   imap <S-INS> <c-r>+
+"Copy to system clipboard
+   vmap <C-S-C> "+y
+" Hide the mouse pointer while typing
+   set mousehide
+endif
+
+
+let g:syntastic_cpp_compiler_options = ' -std=c++11'
+let g:syntastic_cpp_compiler = 'g++'
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
@@ -52,8 +71,13 @@ map <Leader>n <esc>:tabprevious<CR>
 " Tab Close
 map <Leader>c <esc>:tabclose<CR>
 
+" Resize split screen equally
+map <Leader>o <c-w>=
+
 map <Leader>p "*p
 map <Leader>P "+p
+
+:au! BufWritePost $MYVIMRC source $MYVIMRC
 
 " Improved code indention
 vnoremap < <gv
@@ -69,17 +93,40 @@ map <c-h> <c-w>h
 " Sort selection
 vnoremap <Leader>s :sort<CR>
 
+" Tagbar
+nmap <F8> :TagbarToggle<CR>
 
 filetype off
 call pathogen#infect()
 call pathogen#helptags()
-"let g:Powerline_symbols = 'fancy'
+" let g:Powerline_symbols = 'fancy'
 
 filetype plugin indent on
 syntax on
-call Pl#Theme#InsertSegment('ws_marker', 'after', 'lineinfo')
+" call Pl#Theme#InsertSegment('ws_marker', 'after', 'lineinfo')
+
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts = 1
+let g:airline_theme = "powerlineish"
 
 set laststatus=2
+
+"cscope
+if filereadable("cscope.out")
+    set nocscopeverbose
+    cs add cscope.out
+    set cscopeverbose
+endif
+
+:autocmd FileType c,cpp,h nmap <C-]> :cs find g <C-R>=expand("<cword>")<CR><CR>
+:autocmd FileType c,cpp,h nmap <C-\> :cs find c <C-R>=expand("<cword>")<CR><CR>
+
+"Code jumping
+:autocmd FileType python nmap <C-\> :Ggrep "^\s*[^\#].*\<<cword>\>" -- *.py<CR>
+:autocmd FileType * nmap <A-\> :Ggrep "\<<cword>\>" -- *.[ch]<CR>
+:autocmd FileType python nmap <C-]> :Ggrep "\(class\\|def\)\s\+<cword>\s*[(:]" -- *.py<CR>
+:autocmd FileType go nmap <C-]> :call GodefUnderCursor()<CR>
+:let g:godef_split = 0
 
 let g:ctrlp_max_height = 30
 set wildignore+=*.pyc
@@ -114,5 +161,6 @@ endfunction
 inoremap <silent><C-j> <C-R>=OmniPopup('j')<CR>
 inoremap <silent><C-k> <C-R>=OmniPopup('k')<CR>
 
-
-
+" Vala specific
+autocmd BufRead *.vala,*.vapi set efm=%f:%l.%c-%[%^:]%#:\ %t%[%^:]%#:\ %m
+au BufRead,BufNewFile *.vala,*.vapi setfiletype vala

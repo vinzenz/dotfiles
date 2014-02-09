@@ -5,8 +5,15 @@ if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
 fi
 export EDITOR=vim
+export GOROOT=/home/vfeenstr/devel/tools/go.src/
+export GOBIN=$GOROOT/bin
+export PATH=$PATH:$GOBIN
+export GTK2_RC_FILES=/usr/share/themes/Adwaita/gtk-2.0/gtkrc
+export LL_SCRIPT_EDITOR=/usr/bin/gvim
 
 # User specific aliases and functions
+alias empty="truncate -s 0"
+
 export LD_LIBRARY_PATH=.
 
 export HISTFILESIZE=100000
@@ -26,7 +33,8 @@ Black="\[\033[0;30m\]"        # Black
 Red="\[\033[0;31m\]"          # Red
 Green="\[\033[0;32m\]"        # Green
 Yellow="\[\033[0;33m\]"       # Yellow
-Blue="\[\033[0;34m\]"         # Blue
+#Blue="\[\033[0;34m\]"         # Blue
+Blue="\e[0;34m"         # Blue
 Purple="\[\033[0;35m\]"       # Purple
 Cyan="\[\033[0;36m\]"         # Cyan
 White="\[\033[0;37m\]"        # White
